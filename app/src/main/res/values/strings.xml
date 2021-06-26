@@ -1,0 +1,57 @@
+<resources>
+    <string name="app_name">sample-base-kotlin</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+
+    <string name="cost_of_service">Cost of Service</string>
+    <string name="how_was_the_service">How was the service?</string>
+    <string name="amazing_service">Amazing (20%)</string>
+    <string name="good_service">Good (18%)</string>
+    <string name="ok_service">Okay (15%)</string>
+    <string name="round_up_tip">Round up tip?</string>
+    <string name="calculate">Calculate</string>
+    <string name="tip_amount">Tip Amount %s</string>
+
+    <string name="affirmation1">I am strong.</string>
+    <string name="affirmation2">I believe in myself.</string>
+    <string name="affirmation3">Each day is a new opportunity to grow and be a better version of myself.</string>
+    <string name="affirmation4">Every challenge in my life is an opportunity to learn from.</string>
+    <string name="affirmation5">I have so much to be grateful for.</string>
+    <string name="affirmation6">Good things are always coming into my life.</string>
+    <string name="affirmation7">New opportunities await me at every turn.</string>
+    <string name="affirmation8">I have the courage to follow my heart.</string>
+    <string name="affirmation9">Things will unfold at precisely the right time.</string>
+    <string name="affirmation10">I will be present in all the moments that this day brings.</string>
+    <string name="search_hint">Search...</string>
+    <string name="search_query_hint">Search Movies...</string>
+    <string name="empty_text">No series in the list</string>
+
+
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+
+
+    <string name="upcoming">upcoming</string>
+    <string name="popular">popular</string>
+    <string name="top_rated">top_rated</string>
+    <string name="dvd">dvd</string>
+    <string name="favourites">favourites</string>
+
+
+    <string-array name="menu_names">
+        <item>@string/popular</item>
+        <item>@string/upcoming</item>
+        <item>@string/top_rated</item>
+        <item>@string/drawer_close</item>
+    </string-array>
+
+    <string name="title_similar_movies">Similar Movies</string>
+    <string name="text_read_more">READ MORE</string>
+    <string name="title_cast">Cast</string>
+    <string name="title_crew">Crew</string>
+    <string name="read_less">READ LESS</string>
+    <string name="read_more">READ MORE</string>
+    <string name="player_error">Error initializing YouTube player: %s</string>
+    <string name="detail_tv_similar">Similar Tv Series</string>
+</resources>
