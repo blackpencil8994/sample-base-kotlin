@@ -45,8 +45,8 @@ class MainActivity : AppCompatActivity() {
             if (resource.isLoading){
                displayLoader()
             } else {
-                if (resource.isSuccess && resource.data!!.results.isNotEmpty()) {
-                    updateMoviesList(resource.data.results)
+                if (resource.isSuccess && resource.data!!.isNotEmpty()) {
+                    updateMoviesList(resource.data)
                 } else {
                     handleErrorResponse()
                 }

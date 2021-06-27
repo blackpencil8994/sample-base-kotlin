@@ -14,8 +14,9 @@ class AppController : Application() {
     override fun onCreate() {
         super.onCreate()
         mAppComponent = DaggerAppComponent.builder()
-                .application(this)
-                .build()
+            .application(this)
+            .bindContext(this)
+            .build()
 
         initStetho()
     }

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.oanhltk.sample_base_kotlin.data.entity.Movie
 import com.oanhltk.sample_base_kotlin.data.remote.MovieResponse
 import com.oanhltk.sample_base_kotlin.data.remote.Resource
 import com.oanhltk.sample_base_kotlin.di.repository.MovieRepository
@@ -13,7 +14,7 @@ class MainViewModel @Inject constructor(
         private val movieRepository: MovieRepository
 ) : ViewModel() {
 
-    private val moviesListLiveData = MutableLiveData<Resource<MovieResponse>>()
+    private val moviesListLiveData = MutableLiveData<Resource<List<Movie>>>()
 
     @SuppressLint("CheckResult")
     fun loadMoreMovies() {
