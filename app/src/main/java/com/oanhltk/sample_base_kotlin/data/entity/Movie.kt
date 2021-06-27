@@ -1,10 +1,12 @@
 package com.oanhltk.sample_base_kotlin.data.entity
 
 import android.util.Log
+import androidx.room.Entity
 import com.oanhltk.sample_base_kotlin.utils.AppConstants
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
+@Entity(primaryKeys = ["id"])
 @JsonClass(generateAdapter = true)
 data class Movie(
 
