@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <ImageView
+        android:id="@+id/tabIcon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:textAlignment="center"
+        android:src="@drawable/ic_favourite"
+        android:gravity="center"/>
+
+</LinearLayout>

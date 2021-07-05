@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CustomTextView">
+        <attr name="font_name">
+            <enum value="1" name="excelorateBold"/>
+            <enum value="2" name="metropolisThin"/>
+            <enum value="3" name="metropolisLight"/>
+            <enum value="4" name="metropolisRegular"/>
+            <enum value="5" name="metropolisMedium"/>
+            <enum value="6" name="metropolisBold"/>
+            <enum value="7" name="metropolisExtraBold"/>
+        </attr>
+    </declare-styleable>
+</resources>

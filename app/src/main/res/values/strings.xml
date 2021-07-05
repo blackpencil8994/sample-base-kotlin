@@ -3,6 +3,8 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="title_favorite">Favorite</string>
+    <string name="title_movies">Movies</string>
 
     <string name="cost_of_service">Cost of Service</string>
     <string name="how_was_the_service">How was the service?</string>
@@ -54,4 +56,6 @@
     <string name="read_more">READ MORE</string>
     <string name="player_error">Error initializing YouTube player: %s</string>
     <string name="detail_tv_similar">Similar Tv Series</string>
+    <string name="title_popular">Now Popular</string>
+
 </resources>

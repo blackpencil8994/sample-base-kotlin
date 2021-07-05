@@ -74,7 +74,8 @@
 
     <dimen name="activity_search_fav_icon_size">125dp</dimen>
     <dimen name="shine_icon_size">25dp</dimen>
-    <dimen name="search_icon_size">45dp</dimen>
+    <dimen name="search_icon_size">20dp</dimen>
+    <dimen name="search_view_size">45dp</dimen>
     <dimen name="menu_icon_size">40dp</dimen>
     <dimen name="search_bottom_layout_height">55dp</dimen>
 
