@@ -4,13 +4,15 @@ import android.app.Activity
 import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.oanhltk.sample_base_kotlin.data.entity.Movie
 import com.oanhltk.sample_base_kotlin.databinding.MoviesListItemBinding
 
 
-class MoviesListAdapter(private val activity: Activity) : RecyclerView.Adapter<MoviesListAdapter.CustomViewHolder>() {
+class MoviesListAdapter(private val fragment: Fragment) : RecyclerView.Adapter<MoviesListAdapter.CustomViewHolder>() {
     private var movies: MutableList<Movie> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesListAdapter.CustomViewHolder {
@@ -37,27 +39,19 @@ class MoviesListAdapter(private val activity: Activity) : RecyclerView.Adapter<M
         holder.bindTo(holder, getItem(position))
     }
 
-    inner class CustomViewHolder(private val binding: MoviesListItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    inner class CustomViewHolder(private val binding: MoviesListItemBinding) :  RecyclerView.ViewHolder(binding.root) {
         init {
-
             val displayMetrics = DisplayMetrics()
-            activity.windowManager.defaultDisplay.getMetrics(displayMetrics)
+            fragment.activity?.windowManager?.defaultDisplay?.getMetrics(displayMetrics)
             val width = displayMetrics.widthPixels
 
-            itemView.layoutParams = RecyclerView.LayoutParams(
-                (width * 0.85f).toInt(),
-                RecyclerView.LayoutParams.WRAP_CONTENT
-            )
+            itemView.layoutParams = LinearLayout.LayoutParams((width * 0.75f).toInt(),(width * 0.75f * 1.3).toInt())
         }
 
         fun bindTo(holder: MoviesListAdapter.CustomViewHolder, movie: Movie) {
             Glide.with(holder.itemView.context)
                 .load(movie.getFormattedPosterPath())
                 .into(binding.image)
-//            Picasso.get().load(movie.getFormattedPosterPath())
-//                .placeholder(R.drawable.ic_placeholder)
-//                .into(binding.image)
         }
     }
 }

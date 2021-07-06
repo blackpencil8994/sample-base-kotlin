@@ -6,6 +6,7 @@ import com.oanhltk.sample_base_kotlin.di.module.ApiModule
 import com.oanhltk.sample_base_kotlin.di.module.DbModule
 import com.oanhltk.sample_base_kotlin.di.module.RepositoryModule
 import com.oanhltk.sample_base_kotlin.ui.main.MainActivity
+import com.oanhltk.sample_base_kotlin.ui.main.fragments.movie.MoviesFragment
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -31,5 +32,7 @@ interface AppComponent {
 
 
     fun inject(mainActivity: MainActivity)
+
+    fun inject(moviesFragment: MoviesFragment)
 
 }
