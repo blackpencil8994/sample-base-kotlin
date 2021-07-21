@@ -8,4 +8,6 @@ import javax.inject.Singleton
 @Singleton
 interface MovieRepository {
     fun loadMoviesByType() : Observable<Resource<List<Movie>>>
+
+    fun getDetailMovie(id: Int) : Observable<Resource<Movie>>
 }

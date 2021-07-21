@@ -7,7 +7,7 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-abstract class NetworkBoundResource<ResultType,RequestType> @MainThread
+abstract class NetworkBoundResource<ResultType, RequestType> @MainThread
 protected constructor() {
 
     private val asObservable: Observable<Resource<ResultType>>
@@ -20,16 +20,18 @@ protected constructor() {
             source = createCall()
                     .subscribeOn(Schedulers.io())
                     .doOnNext {
-                        saveCallResult(processResponse(it)!!) }
-
-                    .flatMap {
-                        loadFromDb().toObservable()
-                                .map { Resource.success(it) } }
-                    .onErrorResumeNext { t : Throwable ->
-                        loadFromDb().toObservable().map {
-                            Resource.success(it) }
+                        saveCallResult(processResponse(it)!!)
                     }
-
+                    .flatMap {
+                        loadFromDb()
+                                .toObservable()
+                                .map { Resource.success(it) }
+                    }
+                    .onErrorResumeNext { t: Throwable ->
+                        loadFromDb()
+                                .toObservable()
+                                .map { Resource.success(it) }
+                    }
                     .observeOn(AndroidSchedulers.mainThread())
 
         } else {
@@ -38,13 +40,7 @@ protected constructor() {
                     .map { Resource.success(it) }
         }
 
-        asObservable = Observable.concat(
-                loadFromDb()
-                        .toObservable()
-                        .map { Resource.loading(it) }
-                        .take(1),
-                source
-        )
+        asObservable = source
     }
 
     fun getAsObservable(): Observable<Resource<ResultType>> {

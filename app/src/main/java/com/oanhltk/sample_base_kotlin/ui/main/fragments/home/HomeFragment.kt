@@ -13,15 +13,18 @@ import com.oanhltk.sample_base_kotlin.databinding.FragmentHomeBinding
 import com.oanhltk.sample_base_kotlin.ui.main.adapter.HomeFragmentAdapter
 import com.oanhltk.sample_base_kotlin.ui.main.fragments.favorite.FavoriteFragment
 import com.oanhltk.sample_base_kotlin.ui.main.fragments.movie.MoviesFragment
-import javax.inject.Inject
 
 class HomeFragment  : Fragment() {
-    @Inject
-    lateinit var homeViewModel: HomeViewModel
 
     private lateinit var binding: FragmentHomeBinding
 
     private val fragmentList : MutableList<Fragment> = ArrayList()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        fragmentList.add(MoviesFragment())
+        fragmentList.add(FavoriteFragment())
+    }
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -29,17 +32,15 @@ class HomeFragment  : Fragment() {
             savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
-        initViews()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initViews()
         binding.tabLayout.selectTab(binding.tabLayout.getTabAt(0))    }
 
     private fun initViews() {
-        fragmentList.add(MoviesFragment())
-        fragmentList.add(FavoriteFragment())
         binding.pager.adapter = HomeFragmentAdapter(this, fragmentList)
         binding.pager.setUserInputEnabled(false)
         binding.pager.offscreenPageLimit = 2

@@ -6,9 +6,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import com.an.trailers.ui.main.adapter.MoviesListAdapter
@@ -16,7 +18,8 @@ import com.oanhltk.sample_base_kotlin.AppController
 import com.oanhltk.sample_base_kotlin.R
 import com.oanhltk.sample_base_kotlin.data.entity.Movie
 import com.oanhltk.sample_base_kotlin.databinding.FragmentMovieBinding
-import com.oanhltk.sample_base_kotlin.ui.main.adapter.OnSnapPositionChangeListener
+import com.oanhltk.sample_base_kotlin.ui.main.fragments.detail.DetailMovieFragment
+import com.oanhltk.sample_base_kotlin.ui.main.listener.OnSnapPositionChangeListener
 import com.oanhltk.sample_base_kotlin.utils.attachSnapHelperWithListener
 import javax.inject.Inject
 
@@ -24,10 +27,9 @@ class MoviesFragment : Fragment() {
     @Inject
     lateinit var moviesViewModel: MoviesViewModel
 
-
     private lateinit var binding: FragmentMovieBinding
 
-    private lateinit var moviesListAdapter: MoviesListAdapter
+    private var moviesListAdapter: MoviesListAdapter? = null
 
     override fun onAttach(context: Context) {
         (requireActivity().applicationContext as AppController).getAppComponent()?.inject(this)
@@ -51,8 +53,14 @@ class MoviesFragment : Fragment() {
     }
 
     private fun initialiseView() {
-
-        moviesListAdapter = MoviesListAdapter(this)
+        if(moviesListAdapter == null) {
+            moviesListAdapter = MoviesListAdapter(this)
+            moviesListAdapter?.onItemClick = {
+                val bundle = bundleOf("movieId" to it.id)
+                findNavController().navigate(R.id.action_go_detail_movie, bundle)
+                it.title?.let { title -> Log.d("OanhLTK click title", title) }
+            }
+        }
         binding.moviesList.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.moviesList.adapter = moviesListAdapter
 
@@ -80,7 +88,11 @@ class MoviesFragment : Fragment() {
             }
 
         })
-        moviesViewModel.loadMoreMovies()
+        if(moviesViewModel.getMoviesLiveData().value?.data?.isNotEmpty() == true) {
+            Log.d("OanhLTK", moviesViewModel.getMoviesLiveData().value!!.data.toString())
+        } else {
+            moviesViewModel.loadMoreMovies()
+        }
     }
 
 
@@ -96,7 +108,7 @@ class MoviesFragment : Fragment() {
 
     private fun updateMoviesList(movies: List<Movie>) {
         hideLoader()
-        moviesListAdapter.setItems(movies)
+        moviesListAdapter?.setItems(movies)
     }
 
     private fun handleErrorResponse() {

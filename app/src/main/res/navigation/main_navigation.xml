@@ -9,12 +9,25 @@
         android:id="@+id/navigation_home"
         android:name="com.oanhltk.sample_base_kotlin.ui.main.fragments.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_go_detail_movie"
+            app:destination="@id/navigation_detail_movie"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
 
     <fragment
-        android:id="@+id/navigation_favorite"
+        android:id="@+id/navigation_detail_movie"
         android:name="com.oanhltk.sample_base_kotlin.ui.main.fragments.detail.DetailMovieFragment"
-        android:label="@string/title_favorite"
-        tools:layout="@layout/fragment_detail_movie" />
+        android:label="@string/title_detail"
+        tools:layout="@layout/fragment_detail_movie">
+        <argument
+            android:name="movieId"
+            android:defaultValue="0"
+            app:argType="integer" />
+    </fragment>
 
 </navigation>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data class="CastListItemBinding" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/image"
+            android:layout_width="@dimen/profile_item_image_size"
+            android:layout_height="@dimen/profile_item_image_size"
+            android:scaleType="centerCrop"
+            app:shapeAppearanceOverlay="@style/roundedImageView" />
+
+        <com.oanhltk.sample_base_kotlin.ui.base.text.CustomTextView
+            android:id="@+id/txt_name"
+            android:layout_width="@dimen/profile_item_name_size"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            android:textAlignment="center"
+            android:textColor="@color/text_color"
+            android:textSize="13sp"
+            app:font_name="metropolisMedium"/>
+
+        <com.oanhltk.sample_base_kotlin.ui.base.text.CustomTextView
+            android:id="@+id/txt_character"
+            android:layout_width="@dimen/profile_item_name_size"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            android:textColor="@color/text_color"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textSize="12sp"
+            android:textAlignment="center"
+            app:font_name="metropolisRegular" />
+
+    </LinearLayout>
+</layout>

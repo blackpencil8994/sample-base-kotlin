@@ -17,10 +17,10 @@ interface MovieDao {
     fun updateMovie(movie: Movie): Int
 
     @Query("SELECT * FROM `Movie` where id = :id")
-    fun getMovieById(id: Long?): Movie
+    fun getMovieById(id: Int?): Movie
 
     @Query("SELECT * FROM `Movie` where id = :id")
-    fun getMovieDetailById(id: Long?): Flowable<Movie>
+    fun getMovieDetailById(id: Int?): Flowable<Movie>
 
 //    @Query("SELECT * FROM `Movie` where page = :page")
 //    fun getMoviesByPage(page: Long): List<Movie>

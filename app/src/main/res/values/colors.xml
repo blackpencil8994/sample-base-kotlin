@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#566169</color>
+    <color name="colorPrimary">#000000</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="background">#F4F4F4</color>
@@ -12,7 +12,9 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="semi_black">#383838</color>
+    <color name="semi_black">#252525</color>
+    <color name="light_black">#626262</color>
+    <color name="text_color">#1E2132</color>
     <color name="orange_700">#FF5722</color>
     <color name="color_devider">#D1D1D1</color>
 
