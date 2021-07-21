@@ -3,10 +3,7 @@ package com.oanhltk.sample_base_kotlin.di.repository
 import android.content.Context
 import com.oanhltk.sample_base_kotlin.data.entity.Movie
 import com.oanhltk.sample_base_kotlin.data.local.MovieDao
-import com.oanhltk.sample_base_kotlin.data.remote.MovieRemoteDataSource
-import com.oanhltk.sample_base_kotlin.data.remote.MovieResponse
-import com.oanhltk.sample_base_kotlin.data.remote.NetworkBoundResource
-import com.oanhltk.sample_base_kotlin.data.remote.Resource
+import com.oanhltk.sample_base_kotlin.data.remote.*
 import com.oanhltk.sample_base_kotlin.utils.ConnectivityStatus
 import io.reactivex.Flowable
 import io.reactivex.Observable
@@ -18,17 +15,17 @@ class MovieRepositoryImpl @Inject constructor(
         private val movieRemoteDataSource: MovieRemoteDataSource,
         private val movieDao: MovieDao,
         private val context: Context
-    ): MovieRepository {
-    override fun loadMoviesByType():Observable<Resource<List<Movie>>> {
+) : MovieRepository {
+    override fun loadMoviesByType(): Observable<Resource<List<Movie>>> {
 
-        return object : NetworkBoundResource<List<Movie>, MovieResponse>(){
+        return object : NetworkBoundResource<List<Movie>, MovieResponse>() {
             override fun shouldFetch(): Boolean {
                 return ConnectivityStatus.isInternetAvailable(context)
             }
 
             override fun createCall(): Observable<Resource<MovieResponse>> {
                 return movieRemoteDataSource.loadMoviesByType()
-                        .flatMap{movieResponse ->
+                        .flatMap { movieResponse ->
                             Observable.just(
                                     if (movieResponse == null) Resource.error("", MovieResponse(1, emptyList(), 0, 1))
                                     else Resource.success(movieResponse)
@@ -45,6 +42,38 @@ class MovieRepositoryImpl @Inject constructor(
                 return if (movieEntities == null || movieEntities.isEmpty()) {
                     Flowable.empty()
                 } else Flowable.just(movieEntities)
+            }
+
+        }.getAsObservable()
+    }
+
+    override fun getDetailMovie(id: Int): Observable<Resource<Movie>> {
+        return object : NetworkBoundResource<Movie, Movie>() {
+            override fun saveCallResult(item: Movie) {
+                movieDao.insertMovie(item)
+            }
+
+            override fun shouldFetch(): Boolean {
+                return ConnectivityStatus.isInternetAvailable(context)
+            }
+
+            override fun loadFromDb(): Flowable<Movie> {
+                val movie = movieDao.getMovieById(id)
+                return if (movie == null) {
+                    Flowable.empty()
+                } else Flowable.just(movie)
+            }
+
+            override fun createCall(): Observable<Resource<Movie>> {
+                return Observable.combineLatest(
+                        movieRemoteDataSource.getDetailMovie(id),
+                        movieRemoteDataSource.fetchCastDetail(id),
+                        { movie: Movie, creditResponse: CreditResponse ->
+                            if (movie == null) Resource.error("", null) else {
+                                movie.cast = creditResponse.results
+                                Resource.success(movie)
+                            }
+                        })
             }
 
         }.getAsObservable()

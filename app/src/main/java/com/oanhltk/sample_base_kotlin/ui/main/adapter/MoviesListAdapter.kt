@@ -13,6 +13,9 @@ import com.oanhltk.sample_base_kotlin.databinding.MoviesListItemBinding
 
 
 class MoviesListAdapter(private val fragment: Fragment) : RecyclerView.Adapter<MoviesListAdapter.CustomViewHolder>() {
+
+    var onItemClick: ((Movie) -> Unit)? = null
+
     private var movies: MutableList<Movie> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesListAdapter.CustomViewHolder {
@@ -52,6 +55,10 @@ class MoviesListAdapter(private val fragment: Fragment) : RecyclerView.Adapter<M
             Glide.with(holder.itemView.context)
                 .load(movie.getFormattedPosterPath())
                 .into(binding.image)
+
+            holder.itemView.setOnClickListener{
+                onItemClick?.invoke(movie)
+            }
         }
     }
 }
