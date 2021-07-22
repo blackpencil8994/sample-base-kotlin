@@ -6,27 +6,31 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.an.trailers.ui.main.adapter.MoviesListAdapter
 import com.oanhltk.sample_base_kotlin.AppController
 import com.oanhltk.sample_base_kotlin.R
 import com.oanhltk.sample_base_kotlin.data.entity.Movie
 import com.oanhltk.sample_base_kotlin.databinding.FragmentDetailMovieBinding
+import com.oanhltk.sample_base_kotlin.di.factory.ViewModelFactory
 import com.oanhltk.sample_base_kotlin.ui.main.adapter.CastsListAdapter
-import com.oanhltk.sample_base_kotlin.ui.main.fragments.movie.MoviesViewModel
+import com.oanhltk.sample_base_kotlin.ui.main.fragments.home.HomeViewModel
 import javax.inject.Inject
 
 class DetailMovieFragment : Fragment() {
 
     @Inject
     lateinit var detailMovieViewModel: DetailMovieViewModel
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
+    private val homeViewModel: HomeViewModel by viewModels({requireActivity()}) { viewModelFactory }
 
     private lateinit var binding: FragmentDetailMovieBinding
 
@@ -38,6 +42,7 @@ class DetailMovieFragment : Fragment() {
         (requireActivity().applicationContext as AppController).getAppComponent()?.inject(this)
         super.onAttach(context)
     }
+
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
@@ -67,26 +72,35 @@ class DetailMovieFragment : Fragment() {
         binding.imageBack.setOnClickListener {
             findNavController().popBackStack()
         }
+
+        binding.imageFavorite.setOnClickListener {
+            saveAsFavoriteMovie()
+        }
     }
 
     private fun initialiseViewModel() {
-
-        detailMovieViewModel.getDetailMovieLiveData().observe(viewLifecycleOwner, Observer { resource ->
+        detailMovieViewModel.resourceMovie.observe(viewLifecycleOwner, Observer { resource ->
             resource?.apply {
-                if (isLoading){
+                if (isLoading) {
 //                displayLoader()
                 } else {
                     if (isSuccess && data != null) {
-                        Log.d("OanhLTK 588228", data.toString())
-                    updateMovieDetail(data)
+                        Log.d("OanhLTK", data.toString())
+                        updateMovieDetail(data)
                     } else {
 //                    handleErrorResponse()
                     }
                 }
-
             }
-
         })
+
+        detailMovieViewModel.changedFavorite.observe(viewLifecycleOwner, Observer { changedFavorite ->
+            changedFavorite?.let {
+                if (changedFavorite == true)
+                    homeViewModel.loadFavoriteMovies() // => now you are sharing the homeViewModel with FavoriteFragment
+            }
+        })
+
 
         val movieId = args.movieId
         detailMovieViewModel.getDetailMovie(movieId)
@@ -94,7 +108,18 @@ class DetailMovieFragment : Fragment() {
 
     private fun updateMovieDetail(movie: Movie) {
         detailMovieViewModel.movie.postValue(movie)
-        if(movie.cast.isNotEmpty()) castListAdapter.setItems(movie.cast)
+        if (movie.cast.isNotEmpty()) castListAdapter.setItems(movie.cast)
+    }
+
+    private fun saveAsFavoriteMovie() {
+        detailMovieViewModel.movie.value?.apply {
+                copy().apply {
+                if (isFavorite == null) {
+                    isFavorite = true
+                } else isFavorite = !isFavorite!!
+                detailMovieViewModel.saveAsFavorite(this)
+            }
+        }
     }
 
 }

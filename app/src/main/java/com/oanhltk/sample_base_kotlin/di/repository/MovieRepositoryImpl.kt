@@ -50,6 +50,10 @@ class MovieRepositoryImpl @Inject constructor(
     override fun getDetailMovie(id: Int): Observable<Resource<Movie>> {
         return object : NetworkBoundResource<Movie, Movie>() {
             override fun saveCallResult(item: Movie) {
+                val savedMovie = movieDao.getMovieById(id)
+                if (savedMovie != null) {
+                    item.isFavorite = savedMovie.isFavorite
+                }
                 movieDao.insertMovie(item)
             }
 
@@ -78,4 +82,28 @@ class MovieRepositoryImpl @Inject constructor(
 
         }.getAsObservable()
     }
+
+    override fun loadFavoriteMovies(): Observable<Resource<List<Movie>>> {
+        val asObservable: Flowable<List<Movie>>
+        val movieEntities = movieDao.getFavoriteMovies()
+        asObservable = if (movieEntities == null || movieEntities.isEmpty()) {
+            Flowable.empty()
+        } else Flowable.just(movieEntities)
+        return asObservable
+                .toObservable()
+                .map { Resource.success(it) }
+    }
+
+    override fun saveMovieFavorite(movie: Movie): Observable<Resource<Boolean>> {
+        val result = movieDao.updateMovie(movie)
+        val asObservable = Flowable.just(movie)
+        if(result == 1) {
+            return  asObservable
+                    .toObservable()
+                    .map { Resource.success(true) }
+        } else return  asObservable
+                .toObservable()
+                .map {Resource.success(false)}
+    }
+
 }
