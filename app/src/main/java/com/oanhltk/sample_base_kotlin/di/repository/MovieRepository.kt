@@ -10,4 +10,10 @@ interface MovieRepository {
     fun loadMoviesByType() : Observable<Resource<List<Movie>>>
 
     fun getDetailMovie(id: Int) : Observable<Resource<Movie>>
+
+    fun loadFavoriteMovies() : Observable<Resource<List<Movie>>>
+
+    fun saveMovieFavorite(movie: Movie): Observable<Resource<Boolean>>
+
+
 }

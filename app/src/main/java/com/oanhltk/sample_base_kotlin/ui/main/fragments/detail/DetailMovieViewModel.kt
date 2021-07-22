@@ -15,25 +15,42 @@ class DetailMovieViewModel @Inject constructor(
         private val movieRepository: MovieRepository
 ) : ViewModel() {
 
-    private val detailMovie = MutableLiveData<Resource<Movie>>().apply {
+    val resourceMovie = MutableLiveData<Resource<Movie>>().apply {
         value = null
     }
 
     val movie = MutableLiveData<Movie>()
 
-    @SuppressLint("CheckResult")
+    val changedFavorite =  MutableLiveData<Boolean>()
 
+    @SuppressLint("CheckResult")
     fun getDetailMovie(id: Int) {
-        detailMovie.postValue(Resource.loading(null))
+        resourceMovie.postValue(Resource.loading(null))
         movieRepository.getDetailMovie(id)
-                .subscribe({
-                    resource -> detailMovie.postValue(resource)
+                .subscribe({ resource ->
+                    resourceMovie.postValue(resource)
                 }, {
-                    detailMovie.postValue(Resource.error(it.message.toString(), null))
+                    resourceMovie.postValue(Resource.error(it.message.toString(), null))
                     Log.d("OanhLTK..", "onError : $it")
                 })
     }
 
-    fun getDetailMovieLiveData() = detailMovie
+    @SuppressLint("CheckResult")
+    fun saveAsFavorite(item: Movie) {
+        movieRepository.saveMovieFavorite(item)
+                .subscribe({ resource ->
+                    if (resource.isSuccess ) {
+                        if(resource.data == true) {
+                            changedFavorite.postValue(true)
+                            movie.postValue(item)
+                        }
+                    } else {
+                        Log.d("OanhLTK..", "onError : ${resource.message}")
+                    }
+                }, {
+//                    detailMovie.postValue(Resource.error(it.message.toString(), null))
+                    Log.d("OanhLTK..", "onError : $it")
+                })
+    }
 
 }

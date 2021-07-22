@@ -10,13 +10,12 @@
         android:name="com.oanhltk.sample_base_kotlin.ui.main.fragments.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home">
-        <action
-            android:id="@+id/action_go_detail_movie"
+        <action android:id="@+id/action_go_detail_movie"
             app:destination="@id/navigation_detail_movie"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
     </fragment>
 
     <fragment
@@ -26,8 +25,17 @@
         tools:layout="@layout/fragment_detail_movie">
         <argument
             android:name="movieId"
-            android:defaultValue="0"
-            app:argType="integer" />
+            app:argType="integer"
+            android:defaultValue="0" />
+<!--        <action android:id="@+id/action_go_back_home"-->
+<!--            app:destination="@id/navigation_home"-->
+<!--            app:enterAnim="@anim/nav_default_enter_anim"-->
+<!--            app:exitAnim="@anim/nav_default_exit_anim"-->
+<!--            app:popEnterAnim="@anim/nav_default_pop_enter_anim"-->
+<!--            app:popExitAnim="@anim/nav_default_pop_exit_anim"-->
+<!--            app:popUpTo="@+id/navigation_home"-->
+<!--            app:popUpToInclusive="true"-->
+<!--            app:popUpToSaveState="true"/>-->
     </fragment>
 
 </navigation>

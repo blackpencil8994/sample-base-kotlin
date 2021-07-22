@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@drawable/bg_white_corner"
+        android:orientation="horizontal"
+        android:padding="@dimen/text_horizontal_margin"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            app:cardCornerRadius="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/image_poster"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop" />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_information"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingStart="@dimen/activity_horizontal_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/image_backdrop"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.oanhltk.sample_base_kotlin.ui.base.text.CustomTextView
+                android:id="@+id/txt_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_xsmall"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="The Tomorow War"
+                android:textColor="@color/text_color"
+                android:textSize="18sp"
+                app:font_name="metropolisMedium"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.oanhltk.sample_base_kotlin.ui.base.text.CustomTextView
+                android:id="@+id/text_genres"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/text_horizontal_margin"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="Action/Thriller"
+                android:textColor="@color/light_black"
+                android:textSize="@dimen/font_small"
+                app:font_name="metropolisMedium"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_title" />
+
+            <com.oanhltk.sample_base_kotlin.ui.base.text.CustomTextView
+                android:id="@+id/text_3d"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/text_horizontal_margin"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:background="@drawable/bg_3d_movie"
+                android:paddingHorizontal="@dimen/text_horizontal_margin"
+                android:paddingVertical="2dp"
+                android:text="3D"
+                android:textColor="@color/color_cornflower"
+                android:textSize="@dimen/font_small"
+                app:font_name="metropolisMedium"
+                app:layout_constraintEnd_toStartOf="@+id/text_imax"
+                app:layout_constraintTop_toBottomOf="@+id/text_genres" />
+
+            <com.oanhltk.sample_base_kotlin.ui.base.text.CustomTextView
+                android:id="@+id/text_imax"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/text_horizontal_margin"
+                android:background="@drawable/bg_imax_movie"
+                android:paddingHorizontal="@dimen/text_horizontal_margin"
+                android:paddingVertical="2dp"
+                android:text="IMAX"
+                android:textColor="@color/color_brightsun"
+                android:textSize="@dimen/font_small"
+                app:font_name="metropolisMedium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_genres" />
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_rating"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/text_horizontal_margin"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_genres">
+
+                <ImageView
+                    android:id="@+id/image_rating"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/ic_star_rating"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <com.oanhltk.sample_base_kotlin.ui.base.text.CustomTextView
+                    android:id="@+id/text_rating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/text_horizontal_margin"
+                    android:text="8.1/10"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/font_small"
+                    app:font_name="metropolisMedium"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/image_rating" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+
+</layout>

@@ -17,5 +17,6 @@
     <color name="text_color">#1E2132</color>
     <color name="orange_700">#FF5722</color>
     <color name="color_devider">#D1D1D1</color>
-
+    <color name="color_cornflower">#4779FA</color>
+    <color name="color_brightsun">#FF9F2A</color>
 </resources>

@@ -56,7 +56,7 @@ data class Movie(
     var releaseDate: String?,
 
     @Json(name = "is_favorite")
-    val isFavorite: Boolean?,
+    var isFavorite: Boolean?,
 
     @Json(name = "genres")
     @TypeConverters(GenreListTypeConverter::class)
