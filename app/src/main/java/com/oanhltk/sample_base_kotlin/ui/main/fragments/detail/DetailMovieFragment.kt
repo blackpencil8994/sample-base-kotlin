@@ -8,8 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,10 +29,7 @@ class DetailMovieFragment : Fragment() {
     @Inject
     lateinit var detailMovieViewModel: DetailMovieViewModel
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
-
-    private val homeViewModel: HomeViewModel by viewModels({requireActivity()}) { viewModelFactory }
+    private val homeViewModel: HomeViewModel by activityViewModels() // => you don't need to pass viewModelFactory since getDefaultViewModelProviderFactory() override in MainActivity
 
     private lateinit var binding: FragmentDetailMovieBinding
 
@@ -79,7 +78,7 @@ class DetailMovieFragment : Fragment() {
     }
 
     private fun initialiseViewModel() {
-        detailMovieViewModel.resourceMovie.observe(viewLifecycleOwner, Observer { resource ->
+        detailMovieViewModel.resourceMovie.observe(viewLifecycleOwner, { resource ->
             resource?.apply {
                 if (isLoading) {
 //                displayLoader()
@@ -94,7 +93,7 @@ class DetailMovieFragment : Fragment() {
             }
         })
 
-        detailMovieViewModel.changedFavorite.observe(viewLifecycleOwner, Observer { changedFavorite ->
+        detailMovieViewModel.changedFavorite.observe(viewLifecycleOwner, { changedFavorite ->
             changedFavorite?.let {
                 if (changedFavorite == true)
                     homeViewModel.loadFavoriteMovies() // => now you are sharing the homeViewModel with FavoriteFragment

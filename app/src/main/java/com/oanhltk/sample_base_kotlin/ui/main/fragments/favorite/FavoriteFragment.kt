@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -24,10 +25,12 @@ import javax.inject.Inject
 
 class FavoriteFragment : Fragment() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
+//    @Inject
+//    lateinit var viewModelFactory: ViewModelFactory
 
-    private val homeViewModel: HomeViewModel by viewModels({requireActivity()}) { viewModelFactory }
+//    private val homeViewModel: HomeViewModel by activityViewModels() { viewModelFactory }
+
+    private val homeViewModel: HomeViewModel by activityViewModels() // => you don't need to pass viewModelFactory since the getDefaultViewModelProviderFactory() override in MainActivity
 
     private lateinit var binding: FragmentFavoriteBinding
 
@@ -35,7 +38,7 @@ class FavoriteFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        (requireActivity() .applicationContext as AppController).getAppComponent()?.inject(this)
+        (requireActivity() .applicationContext as AppController).getAppComponent()?.inject(this) // we don't need this neither
     }
 
     override fun onCreateView(
@@ -66,7 +69,7 @@ class FavoriteFragment : Fragment() {
     }
 
     private fun initialiseViewModel() {
-        homeViewModel.favoriteLivedata.observe(viewLifecycleOwner, Observer { resource ->
+        homeViewModel.favoriteLivedata.observe(viewLifecycleOwner, { resource ->
             if (resource.isLoading){
 //                displayLoader()
             } else {
